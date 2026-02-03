@@ -1,4 +1,3 @@
----
 # Flutter Music Player
 
 A sleek, modern music player built with **Flutter** that focuses on a seamless user experience and high-quality audio playback. This application supports local file browsing, playlist management, and background audio control.
