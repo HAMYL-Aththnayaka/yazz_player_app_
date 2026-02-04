@@ -16,8 +16,19 @@ class SettingPage extends StatelessWidget {
         decoration:BoxDecoration(
         color:Theme.of(context).colorScheme.primary.withOpacity(0.1),
         ),
+        padding:EdgeInsets.all(16.0),
+        margin:EdgeInsets.all(16.0),
         child:Row(
+          mainAxisAlignment:MainAxisAlignment.spaceBetween,
           children:[
+              Text(
+                'Dark Mode',
+                style:TextStyle(
+                  fontSize:18.0,
+                  fontWeight:FontWeight.bold,
+                ),
+              ),
+              Spacer(), 
             //darken and light mode switch
             CupertinoSwitch(
               value:Provider.of<ThemeProvider>(context).isDarkMode,
