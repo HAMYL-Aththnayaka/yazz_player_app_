@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:yazz_player_app/models/song.dart';
 
 class PlaylistProvider with ChangeNotifier {
-  List<String> _playlists = [];
 
-  List<String> get playlists => _playlists;
+  final List<song> _songPlaylost = [
 
-  void addPlaylist(String playlistName) {
-    _playlists.add(playlistName);
-    notifyListeners();
-  }
+  song(
+    songName: 'Song 1',
+    artistName: 'Artist 1',
+    albumName: 'Album 1',
+    duration: '3:45',
+  ),
 
-  void removePlaylist(String playlistName) {
-    _playlists.remove(playlistName);
-    notifyListeners();
-  }
+  ];
 }
