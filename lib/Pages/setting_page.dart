@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:yazz_player_app/Theme/theme_provider.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
@@ -19,8 +20,10 @@ class SettingPage extends StatelessWidget {
           children:[
             //darken and light mode switch
             CupertinoSwitch(
-              value:false,
-              onChanged:(value){},
+              value:Provider.of<ThemeProvider>(context).isDarkMode,
+              onChanged:(value)=>
+                Provider.of<ThemeProvider>(context,listen:false).toggleTheme(),
+              
             ),
 
           ],
