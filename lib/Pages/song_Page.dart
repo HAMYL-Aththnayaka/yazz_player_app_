@@ -6,144 +6,166 @@ import 'package:yazz_player_app/models/playlistProvider.dart';
 class SongPage extends StatelessWidget {
   const SongPage({super.key});
 
+  // Helper method to format Duration (e.g., 00:00)
+  String formatTime(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String minutes = twoDigits(duration.inMinutes.remainder(60));
+    String seconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$minutes:$seconds";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PlaylistProvider>(
       builder: (context, value, child) {
-        if (value.currentIndex == null) {
-          return const Scaffold(body: Center(child: Text('No song selected')));
-        }
-
-        final song = value.playlist[value.currentIndex!];
+        // Get the current song
+        final playlist = value.playlist;
+        final currentSong = playlist[value.currentIndex];
 
         return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(25),
+              padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  /// 🔙 Custom App Bar
+                  /// Custom App Bar
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.arrow_back),
                         onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          song.songName,
-                          style: Theme.of(context).textTheme.titleMedium,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      const Text("P L A Y L I S T"),
+                      IconButton(
+                        onPressed: () {}, 
+                        icon: const Icon(Icons.menu),
                       ),
                     ],
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 25),
 
-                  /// 🎵 Album Section
+                  /// Album Art Section
                   NewBox(
                     child: Column(
                       children: [
-                        Image.asset(
-                          song.albumArtImagePath,
-                          width: 220,
-                          height: 220,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          song.artistName,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            currentSong.albumArtImagePath,
+                            height: 300,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        Row(
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    currentSong.songName,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    currentSong.artistName,
+                                    style: TextStyle(color: Colors.grey[600]),
+                                  ),
+                                ],
+                              ),
+                              const Icon(Icons.favorite, color: Colors.red),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  /// Song Progress Slider
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              song.songName,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const Icon(Icons.favorite_border, size: 28),
+                            // Current time
+                            Text(formatTime(value.currentDuration)),
+                            const Icon(Icons.shuffle),
+                            const Icon(Icons.repeat),
+                            // Total time
+                            Text(formatTime(value.totalDuration)),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  /// ⏱ Time + Controls
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 28),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('0:00'),
-                        Icon(Icons.shuffle),
-                        Icon(Icons.repeat),
-                        Text('3:45'),
-                      ],
-                    ),
-                  ),
-
-                  SliderTheme(
-                    data: const SliderThemeData(
-                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0),
-                      overlayShape: RoundSliderOverlayShape(overlayRadius: 16),
-                    ),
-                    child: Slider(
-                      value: 30,
-                      min: 0,
-                      max: 100,
-                      onChanged: (_) {},
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: NewBox(
-                           child: Icon(Icons.skip_previous, size: 40),
-                          ),
-                        ),
                       ),
-                      SizedBox(width: 20),
-                      Expanded(
-                        flex: 2,
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: NewBox(
-                            child: Icon(
-                              Icons.play_circle, size: 40),
-                          ),
+                      
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5),
                         ),
-                      ),
-                      SizedBox(width: 20),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {},
-                         
-                          child: NewBox(
-                            child: Icon(Icons.skip_next, size: 40)),
-                          
+                        child: Slider(
+                          min: 0,
+                          max: value.totalDuration.inSeconds.toDouble(),
+                          value: value.currentDuration.inSeconds.toDouble(),
+                          activeColor: Colors.green,
+                          onChanged: (double newValue) {
+                            // Optionally update UI during dragging
+                          },
+                          onChangeEnd: (double newValue) {
+                            // Seek to the new position when dragging ends
+                            value.seek(Duration(seconds: newValue.toInt()));
+                          },
                         ),
                       ),
                     ],
                   ),
+
+                  const SizedBox(height: 25),
+
+                  /// Playback Controls
+                  Row(
+                    children: [
+                      // Previous button
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: value.playPrevious,
+                          child: const NewBox(child: Icon(Icons.skip_previous)),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      // Play/Pause button
+                      Expanded(
+                        flex: 2,
+                        child: GestureDetector(
+                          onTap: value.pauseOrResume,
+                          child: NewBox(
+                            child: Icon(
+                              value.isPlaying ? Icons.pause : Icons.play_arrow,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      // Next button
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: value.playNext,
+                          child: const NewBox(child: Icon(Icons.skip_next)),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
