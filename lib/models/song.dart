@@ -1,14 +1,14 @@
-class song{
+class Song{
   final String songName;
   final String artistName;
-  final String albumName;
-  final String duration;
+  final String albumArtImagePath;
+  final String audioPath;
 
-  song({
+  Song({
     required this.songName,
     required this.artistName,
-    required this.albumName,
-    required this.duration,
+    required this.albumArtImagePath,
+    required this.audioPath,
   });
 
 }
