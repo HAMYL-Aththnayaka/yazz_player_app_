@@ -4,14 +4,17 @@ import 'package:yazz_player_app/Pages/home_page.dart';
 import 'package:yazz_player_app/Pages/setting_page.dart';
 import 'package:yazz_player_app/Theme/light_mode.dart';
 import 'package:yazz_player_app/Theme/theme_provider.dart';
+import 'package:yazz_player_app/models/playlistProvider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-     create: (context) => ThemeProvider(),
-      child:const MyApp())
-  
-  ) ;
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider(ThemeProvider)),
+        ChangeNotifierProvider(create: (context) => PlaylistProvider()),
+      ],
+      child: const MyApp(),
+  ) );
 }
 
 class MyApp extends StatelessWidget {

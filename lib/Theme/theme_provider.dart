@@ -5,6 +5,8 @@ class ThemeProvider extends ChangeNotifier{
   //initially set to light mode
   ThemeData _themeData =ThemeData.light();
 
+  ThemeProvider(lightModeTheme);
+
   //get ThemeData
   ThemeData get themeData {
     return _themeData;
