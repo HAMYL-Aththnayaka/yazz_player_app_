@@ -65,9 +65,14 @@ flutter run
 | Home Screen | Player View | Playlists |
 | --- | --- | --- |
 |  |  |  |
+<img width="467" height="876" alt="Screenshot 2026-02-05 231435" src="https://github.com/user-attachments/assets/128a1bd4-79c3-49b9-b09f-2e335fb09536" />
+
+<img width="469" height="877" alt="Screenshot 2026-02-05 231411" src="https://github.com/user-attachments/assets/6030bf24-722b-4936-aac7-07e47081a4c4" />
+
+<img width="465" height="881" alt="Screenshot 2026-02-05 231353" src="https://github.com/user-attachments/assets/b98d69b6-c377-4e03-ae8b-8142b1ad49dd" />
+<img width="464" height="882" alt="Screenshot 2026-02-05 231400" src="https://github.com/user-attachments/assets/3a384db4-d88f-4240-af5c-4fa660f0c09d" />
 
 ---
-
 ## 🛡️ Permissions
 
 This app requires the following permissions to function correctly:
